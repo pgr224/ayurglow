@@ -1,28 +1,24 @@
 import { HeroCarousel } from "@/components/home/HeroCarousel";
-import { CategoryCircles } from "@/components/home/CategoryCircles";
-import { RoutineGrid } from "@/components/home/RoutineGrid";
+import { TrustBanner } from "@/components/home/TrustBanner";
 import { BestsellerGrid } from "@/components/home/BestsellerGrid";
+import { ShopByConcern } from "@/components/home/ShopByConcern";
+import { RoutineGrid } from "@/components/home/RoutineGrid";
+import { BrandStory } from "@/components/home/BrandStory";
+import { IngredientsShowcase } from "@/components/home/IngredientsShowcase";
+import { Testimonials } from "@/components/home/Testimonials";
 
 export default function Home() {
   return (
     <div className="flex flex-col">
-      {/* 1. Hero Carousel */}
       <HeroCarousel />
-
-      {/* 2. Shop by Concern / Skin Type */}
-      <CategoryCircles title="Shop by Concern" />
-      
-      {/* 3. Bestseller Section */}
+      <TrustBanner />
       <BestsellerGrid />
-
-      {/* 4. Routine Section */}
+      <ShopByConcern />
       <RoutineGrid />
-
-      {/* 5. Shop by Ingredient */}
-      <CategoryCircles title="Shop by Ingredient" />
-
-      {/* Extra spacing for bottom nav on mobile */}
-      <div className="h-12" />
+      <BrandStory />
+      <IngredientsShowcase />
+      <Testimonials />
+      <div className="h-12 md:hidden" />
     </div>
   );
 }

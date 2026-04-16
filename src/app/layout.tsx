@@ -3,6 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { BottomNav } from "@/components/layout/BottomNav";
+import { CartProvider } from "@/context/cart-context";
+import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
+import { Footer } from "@/components/layout/Footer";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -22,11 +25,15 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} font-sans scroll-smooth`}>
       <body className="min-h-screen bg-background antialiased flex flex-col">
-        <Header />
-        <main className="flex-1 pb-20 md:pb-0">
-          {children}
-        </main>
-        <BottomNav />
+        <CartProvider>
+          <AnnouncementBar />
+          <Header />
+          <main className="flex-1 pb-20 md:pb-0">
+            {children}
+          </main>
+          <Footer />
+          <BottomNav />
+        </CartProvider>
       </body>
     </html>
   );

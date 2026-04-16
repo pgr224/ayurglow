@@ -49,53 +49,53 @@
 }
 
 :root {
-  --background: oklch(0.99 0 0); /* Extremely off-white background */
-  --foreground: oklch(0.2 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0 0);
-  --primary: oklch(0.3 0.05 180); /* Deep Dermat Teal */
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.95 0.02 180); /* Pale Teal */
-  --secondary-foreground: oklch(0.3 0.05 180);
-  --muted: oklch(0.96 0.01 0);
-  --muted-foreground: oklch(0.5 0.02 0);
-  --accent: oklch(0.94 0.05 45); /* Soft Skin Tan/Peach */
-  --accent-foreground: oklch(0.3 0.05 45);
-  --destructive: oklch(0.6 0.15 25);
-  --border: oklch(0.92 0 0);
-  --input: oklch(0.92 0 0);
-  --ring: oklch(0.3 0.05 180);
+  --background: #FFFDF8; /* Warm luxurious cream */
+  --foreground: #1E293B; /* Slate 800 */
+  --card: #FFFFFF;
+  --card-foreground: #1E293B;
+  --popover: #FFFFFF;
+  --popover-foreground: #1E293B;
+  --primary: #009688; /* Deep Dermat Teal from logo */
+  --primary-foreground: #FFFFFF;
+  --secondary: #E8F5E9; /* Pale green tint */
+  --secondary-foreground: #009688;
+  --muted: #F1F5F9;
+  --muted-foreground: #64748B;
+  --accent: #FDE68A; /* Soft luxury gold/peach */
+  --accent-foreground: #B45309;
+  --destructive: #EF4444;
+  --border: #E2E8F0;
+  --input: #E2E8F0;
+  --ring: #009688;
   
-  /* Feature Colors (Paste Aesthetic) */
-  --color-vitamin-c: oklch(0.9 0.1 70); /* Soft Orange */
-  --color-hyaluronic: oklch(0.9 0.05 240); /* Soft Blue */
-  --color-tea-tree: oklch(0.9 0.08 150); /* Soft Green */
-  --color-niacinamide: oklch(0.9 0.05 300); /* Soft Purple */
+  /* Feature Colors for Categories */
+  --color-vitamin-c: #FDE68A;
+  --color-hyaluronic: #DBEAFE; 
+  --color-tea-tree: #D1FAE5;
+  --color-niacinamide: #F3E8FF;
   
   --radius: 0.75rem;
 }
 
 .dark {
-  --background: oklch(0.12 0.02 180); /* Very Dark Teal */
-  --foreground: oklch(0.95 0.01 180);
-  --card: oklch(0.15 0.03 180);
-  --card-foreground: oklch(0.95 0.01 180);
-  --popover: oklch(0.15 0.03 180);
-  --popover-foreground: oklch(0.95 0.01 180);
-  --primary: oklch(0.6 0.1 180); /* Bright Teal */
-  --primary-foreground: oklch(0.12 0.02 180);
-  --secondary: oklch(0.25 0.05 180);
-  --secondary-foreground: oklch(0.95 0.01 180);
-  --muted: oklch(0.25 0.05 180);
-  --muted-foreground: oklch(0.7 0.03 180);
-  --accent: oklch(0.25 0.05 180);
-  --accent-foreground: oklch(0.95 0.01 180);
-  --destructive: oklch(0.5 0.15 25);
-  --border: oklch(0.25 0.05 180);
-  --input: oklch(0.25 0.05 180);
-  --ring: oklch(0.6 0.1 180);
+  --background: #022C22; /* Very dark teal */
+  --foreground: #F8FAFC;
+  --card: #064E3B; /* Darker teal card */
+  --card-foreground: #F8FAFC;
+  --popover: #064E3B;
+  --popover-foreground: #F8FAFC;
+  --primary: #2DD4BF; /* Bright Teal for dark mode */
+  --primary-foreground: #022C22;
+  --secondary: #0F766E;
+  --secondary-foreground: #F8FAFC;
+  --muted: #0F766E;
+  --muted-foreground: #94A3B8;
+  --accent: #D97706; /* Deep amber */
+  --accent-foreground: #FFFBEB;
+  --destructive: #EF4444;
+  --border: #0F766E;
+  --input: #0F766E;
+  --ring: #2DD4BF;
 }
 
 @layer base {
