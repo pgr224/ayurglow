@@ -1,7 +1,7 @@
 "use server"
 
 import { getDb } from "@/db";
-import { products, categories, coupons, siteSettings, pages, users } from "@/db/schema";
+import { products, categories, coupons, siteSettings, pages, users, banners } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
@@ -188,6 +188,16 @@ export async function getBannersAction() {
     const db = await getDb();
     return await db.select().from(banners);
   } catch (error) {
+    if (
+      error instanceof Error &&
+      (
+        error.message.includes("Cloudflare request context is not available") ||
+        error.message.includes("getRequestContext") ||
+        error.message.includes("getOptionalRequestContext")
+      )
+    ) {
+      return [];
+    }
     console.error("Failed to get banners:", error);
     return [];
   }
@@ -220,6 +230,46 @@ export async function deleteBannerAction(id: string) {
     return { success: true };
   } catch (error) {
     console.error("Failed to delete banner:", error);
+    return { success: false, error: (error as Error).message };
+  }
+}
+// --- Users ---
+
+export async function getUsersAction() {
+  try {
+    const db = await getDb();
+    return await db.select().from(users);
+  } catch (error) {
+    console.error("Failed to get users:", error);
+    return [];
+  }
+}
+
+export async function upsertUserAction(data: any) {
+  try {
+    const db = await getDb();
+    if (data.id) {
+      await db.update(users).set(data).where(eq(users.id, data.id));
+    } else {
+      data.id = crypto.randomUUID();
+      await db.insert(users).values(data);
+    }
+    revalidatePath("/admin/users");
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to upsert user:", error);
+    return { success: false, error: (error as Error).message };
+  }
+}
+
+export async function deleteUserAction(id: string) {
+  try {
+    const db = await getDb();
+    await db.delete(users).where(eq(users.id, id));
+    revalidatePath("/admin/users");
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to delete user:", error);
     return { success: false, error: (error as Error).message };
   }
 }

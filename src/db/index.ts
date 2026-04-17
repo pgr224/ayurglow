@@ -1,9 +1,14 @@
 import { drizzle } from 'drizzle-orm/d1';
 import * as schema from './schema';
-import { getRequestContext } from "@cloudflare/next-on-pages";
+import { getOptionalRequestContext } from "@cloudflare/next-on-pages";
 
 export const getDb = async () => {
-  const env = getRequestContext().env as CloudflareEnv;
+  const requestContext = getOptionalRequestContext();
+  if (!requestContext) {
+    throw new Error('Cloudflare request context is not available');
+  }
+
+  const env = requestContext.env as CloudflareEnv;
   
   if (!env.DB) {
     throw new Error('D1 Database binding (DB) not found');
