@@ -18,12 +18,11 @@ export function Header() {
             <Menu className="h-6 w-6" />
           </Button>
           <Link href="/" className="flex items-center overflow-hidden mix-blend-multiply w-[140px] md:w-[180px]">
-            {/* The actual AyurGlow logo from the visiting card */}
-            <Image 
-              src="/images/ayurglow_font.png" 
-              alt="AyurGlow - Ayurvedic Aesthetics" 
-              width={200} 
-              height={50} 
+            <Image
+              src="/images/ayurglow_font.png"
+              alt="AyurGlow - Ayurvedic Aesthetics"
+              width={200}
+              height={50}
               className="object-contain"
               priority
             />
@@ -59,7 +58,7 @@ export function Header() {
           </Link>
         </div>
       </div>
-      
+
       {/* Mobile Search Bar Visibility */}
       <div className="px-4 py-3 bg-white border-t border-slate-100 md:hidden">
         <div className="relative group">

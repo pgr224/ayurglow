@@ -18,7 +18,7 @@ export const categories = sqliteTable("categories", {
   name: text("name").notNull(),
   slug: text("slug").unique().notNull(),
   icon: text("icon"), // SVG or icon name
-  type: text("type", { enum: ["skin_type", "concern", "ingredient", "routine"] }).notNull(),
+  type: text("type", { enum: ["skin_type", "concern", "ingredient", "routine", "category"] }).notNull(),
   parentId: text("parent_id"),
   sortOrder: integer("sort_order").default(0),
 });

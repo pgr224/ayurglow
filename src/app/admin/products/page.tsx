@@ -10,7 +10,9 @@ import {
   Archive, RefreshCw
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { getProductsAction, deleteProductAction, getCategoriesAction, upsertProductAction } from '../actions'
+import { getProductsAction, deleteProductAction, getCategoriesAction, upsertProductAction, seedProductsAction } from '../actions'
+import { DatabaseZap } from 'lucide-react'
+
 import Image from 'next/image'
 
 export const runtime = 'edge'
@@ -63,11 +65,6 @@ function StatusBadge({ product }: { product: Product }) {
       {product.badge && !product.isBestseller && (
         <span className="text-[10px] font-bold bg-primary/10 text-primary px-2 py-0.5 rounded-full">
           {product.badge}
-        </span>
-      )}
-      {discount > 0 && (
-        <span className="text-[10px] font-bold bg-green-50 text-green-700 px-2 py-0.5 rounded-full border border-green-200">
-          {discount}% OFF
         </span>
       )}
     </div>
@@ -366,9 +363,24 @@ export default function AdminProducts() {
   const [deleteLoading, setDeleteLoading] = useState<string | null>(null)
   const pageSize = 10
 
+  const [isSeeding, setIsSeeding] = useState(false)
+
   useEffect(() => {
     loadData()
   }, [])
+
+  async function handleSeed() {
+    if (!confirm('Sync all 16 branded products from library to database? Existing products with same slugs will be updated.')) return
+    setIsSeeding(true)
+    const res = await seedProductsAction()
+    if (res.success) {
+      alert(`Successfully synced ${res.count} branded products!`)
+      await loadData()
+    } else {
+      alert('Sync failed: ' + res.error)
+    }
+    setIsSeeding(false)
+  }
 
   async function loadData() {
     setLoading(true)
@@ -484,9 +496,20 @@ export default function AdminProducts() {
           </p>
         </div>
         <div className="flex items-center gap-3 ml-12 md:ml-0">
-          <Button variant="outline" size="sm" onClick={loadData} className="gap-2 text-xs font-bold">
+          <Button variant="outline" size="sm" onClick={loadData} className="gap-2 text-xs font-bold rounded-xl h-10">
             <RefreshCw className="h-3.5 w-3.5" /> Refresh
           </Button>
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={handleSeed} 
+            disabled={isSeeding}
+            className="gap-2 text-xs font-bold rounded-xl h-10 border-primary/30 text-primary hover:bg-primary/5 shadow-sm"
+          >
+            {isSeeding ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <DatabaseZap className="h-3.5 w-3.5" />}
+            Sync Library
+          </Button>
+
           <Button 
             onClick={() => { setEditingProduct(null); setShowForm(true) }}
             className="gap-2 px-5 rounded-xl shadow-lg shadow-primary/20 text-xs font-black uppercase tracking-wider"
@@ -709,10 +732,7 @@ export default function AdminProducts() {
                       <div className="flex flex-col">
                         <span className="font-black text-primary text-sm">₹{product.basePrice.toLocaleString()}</span>
                         {product.mrp > product.basePrice && (
-                          <div className="flex items-center gap-1.5">
-                            <span className="text-[10px] line-through text-muted-foreground">₹{product.mrp.toLocaleString()}</span>
-                            <span className="text-[9px] font-black text-green-600 bg-green-50 px-1 rounded">{discount}%</span>
-                          </div>
+                          <span className="text-[10px] line-through text-muted-foreground">₹{product.mrp.toLocaleString()}</span>
                         )}
                       </div>
                     </td>

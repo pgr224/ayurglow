@@ -2,6 +2,8 @@
 
 import { getDb } from "@/db";
 import { products, categories, coupons, siteSettings, pages, users, banners } from "@/db/schema";
+import { products as localProducts } from "@/lib/products";
+
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
@@ -270,6 +272,74 @@ export async function deleteUserAction(id: string) {
     return { success: true };
   } catch (error) {
     console.error("Failed to delete user:", error);
+    return { success: false, error: (error as Error).message };
+  }
+}
+
+// --- Seed Action ---
+
+export async function seedProductsAction() {
+  try {
+    const db = await getDb();
+    
+    for (const lp of localProducts) {
+      // 1. Handle Category
+      let categoryId = "";
+      const catSlug = lp.category.toLowerCase().replace(/ /g, '-');
+      const existingCat = await db.query.categories.findFirst({
+        where: eq(categories.slug, catSlug)
+      });
+      
+      if (existingCat) {
+        categoryId = existingCat.id;
+      } else {
+        categoryId = crypto.randomUUID();
+        await db.insert(categories).values({
+          id: categoryId,
+          name: lp.category,
+          slug: catSlug,
+          type: 'category'
+        });
+      }
+      
+      // 2. Handle Product
+      const productData = {
+        name: lp.name,
+        slug: lp.slug,
+        description: lp.description,
+        categoryId: categoryId,
+        basePrice: lp.price,
+        mrp: lp.mrp,
+        rating: lp.rating,
+        reviewCount: lp.reviews,
+        isBestseller: lp.badge === 'Bestseller',
+        isTrending: lp.badge === 'Trending',
+        badge: lp.badge || null,
+        highlights: lp.highlights.join('\n'),
+        benefits: lp.benefits.join('\n'),
+        ingredients: lp.ingredients.join(', '),
+        images: JSON.stringify([lp.image]),
+      };
+
+      const existingProd = await db.query.products.findFirst({
+        where: eq(products.slug, lp.slug)
+      });
+
+      if (existingProd) {
+        await db.update(products).set(productData).where(eq(products.id, existingProd.id));
+      } else {
+        await db.insert(products).values({
+          id: crypto.randomUUID(),
+          ...productData
+        });
+      }
+    }
+
+    revalidatePath("/admin/products");
+    revalidatePath("/");
+    return { success: true, count: localProducts.length };
+  } catch (error) {
+    console.error("Failed to seed products:", error);
     return { success: false, error: (error as Error).message };
   }
 }
