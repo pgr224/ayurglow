@@ -132,35 +132,55 @@ export default function PaymentSettingsPage() {
           </div>
           <div className="flex flex-col gap-4">
             {providers.map((provider) => {
+              if (provider.comingSoon) return null; // Hide coming soon ones completely to declutter
+              
               const isExpanded = expandedId === provider.id
-              const isActive = provider.enabled && !provider.comingSoon
+              const isActive = provider.enabled
+              
               return (
-                <div key={provider.id} className={cn("bg-white rounded-2xl border shadow-sm overflow-hidden", isActive ? "border-primary/20" : "")}>
-                  <div className="p-5 flex items-center justify-between cursor-pointer hover:bg-muted/5" onClick={() => setExpandedId(isExpanded ? null : provider.id)}>
+                <div key={provider.id} className={cn("bg-white rounded-2xl border shadow-sm overflow-hidden transition-all", isActive ? "border-primary/40 ring-1 ring-primary/10" : "")}>
+                  <div className="p-5 flex items-center justify-between cursor-pointer hover:bg-muted/10 transition-colors" onClick={() => setExpandedId(isExpanded ? null : provider.id)}>
                     <div className="flex items-center gap-4">
-                      <span className="text-2xl">{provider.icon}</span>
+                      <div className={cn("h-12 w-12 rounded-xl flex items-center justify-center shrink-0 border", isActive ? "bg-primary/10 border-primary/20" : "bg-muted border-muted-foreground/20")}>
+                        <span className="text-2xl">{provider.icon}</span>
+                      </div>
                       <div className="flex flex-col text-left">
-                        <span className="text-sm font-black uppercase tracking-wider">{provider.name}</span>
+                        <span className="text-sm font-black uppercase tracking-wider flex items-center gap-2">
+                          {provider.name}
+                          {isActive && <span className="h-2 w-2 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.6)]" />}
+                        </span>
                         <span className="text-xs text-muted-foreground">{provider.description}</span>
                       </div>
                     </div>
-                  </div>
-                  {isExpanded && (
-                    <div className="border-t p-5 animate-in slide-in-from-top-1">
-                       {/* Same existing fields logic */}
-                       <div className="flex gap-4 mb-4">
-                          <Button variant="outline" size="sm" onClick={() => toggleEnabled(provider.id)}>
-                             {provider.enabled ? "Disable" : "Enable"}
-                          </Button>
+                    {/* Toggle Button for Header */}
+                    <div className="flex items-center gap-3">
+                       <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground hidden md:block">
+                         {isActive ? 'Active' : 'Disabled'}
+                       </span>
+                       <div 
+                         onClick={(e) => { e.stopPropagation(); toggleEnabled(provider.id); }}
+                         className={cn("w-12 h-6 rounded-full flex items-center px-1 cursor-pointer transition-colors border", isActive ? "bg-primary border-primary/20" : "bg-muted border-slate-300")}
+                       >
+                         <div className={cn("h-4 w-4 bg-white rounded-full shadow-sm transition-transform duration-300", isActive ? "translate-x-6" : "translate-x-0")} />
                        </div>
-                       <div className="grid grid-cols-1 gap-4 bg-muted/10 p-4 rounded-xl">
+                    </div>
+                  </div>
+                  
+                  {isExpanded && (
+                    <div className="border-t p-6 animate-in slide-in-from-top-1 bg-slate-50/50">
+                       <h4 className="text-[10px] font-black uppercase tracking-widest text-primary mb-4 flex items-center gap-2">
+                          Configuration Keys
+                       </h4>
+                       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                           {provider.fields.map(f => (
-                            <div key={f.key} className="flex flex-col gap-1.5">
-                               <label className="text-[10px] font-black uppercase text-muted-foreground">{f.label}</label>
+                            <div key={f.key} className="flex flex-col gap-2">
+                               <label className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{f.label}</label>
                                <input 
+                                 type={showSecrets[`${provider.id}_${f.key}`] ? 'text' : f.type}
+                                 placeholder={f.placeholder}
                                  value={f.value} 
                                  onChange={(e) => handleFieldChange(provider.id, f.key, e.target.value)}
-                                 className="h-10 border rounded-lg px-3 text-sm focus:outline-primary"
+                                 className="h-11 border rounded-xl px-4 text-sm focus:outline-primary bg-white shadow-sm transition-all"
                                />
                             </div>
                           ))}

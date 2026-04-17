@@ -57,11 +57,23 @@ export const DEFAULT_PAYMENT_PROVIDERS: PaymentProvider[] = [
     description: 'Full-featured payment gateway supporting cards, UPI, netbanking, wallets. Get your keys from dashboard.razorpay.com.',
     icon: '⚡',
     enabled: false,
-    comingSoon: true,
+    comingSoon: false,
     fields: [
       { key: 'razorpay_key_id', label: 'Key ID', placeholder: 'rzp_live_xxxx', type: 'text', value: '' },
       { key: 'razorpay_key_secret', label: 'Key Secret', placeholder: 'Enter secret key', type: 'password', value: '' },
       { key: 'razorpay_webhook_secret', label: 'Webhook Secret (Optional)', placeholder: 'whsec_xxx', type: 'password', value: '' },
+    ],
+  },
+  {
+    id: 'custom',
+    name: 'Custom Payment Link / QR',
+    description: 'Provide an external static payment link or redirect URL for users.',
+    icon: '🔗',
+    enabled: false,
+    comingSoon: false,
+    fields: [
+      { key: 'custom_url', label: 'Payment URL', placeholder: 'https://...', type: 'text', value: '' },
+      { key: 'custom_instructions', label: 'Instructions', placeholder: 'Pay via the link and share screenshot', type: 'text', value: '' },
     ],
   },
   {
