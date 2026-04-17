@@ -38,3 +38,24 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
+## Deploy on Cloudflare Pages (GitHub Actions)
+
+A workflow is configured at `.github/workflows/deploy-pages.yml` to deploy on every push to `main`.
+
+Set these repository secrets in GitHub before running the workflow:
+
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ACCOUNT_ID`
+
+The workflow will:
+
+1. Install dependencies with `npm ci`
+2. Apply remote D1 migrations with `npx wrangler d1 migrations apply aayurglow-db-20260417 --remote`
+3. Run `npm run deploy:ci` (build with `next-on-pages` and deploy to Cloudflare Pages)
+
+### Local Deploy Behavior on Windows
+
+- `npm run deploy` is intentionally blocked on Windows and prints CI instructions immediately.
+- Use GitHub Actions for deployment (push to `main` or run workflow manually).
+- If you are on Linux/WSL, use `npm run deploy:ci` for direct deploy.
+

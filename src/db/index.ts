@@ -1,11 +1,9 @@
 import { drizzle } from 'drizzle-orm/d1';
 import * as schema from './schema';
-import { getCloudflareContext } from "@opennextjs/cloudflare";
+import { getRequestContext } from "@cloudflare/next-on-pages";
 
 export const getDb = async () => {
-  // In a production Next.js app on Cloudflare Pages, 
-  // you must access the platform bindings from the context.
-  const { env } = await getCloudflareContext();
+  const env = getRequestContext().env as CloudflareEnv;
   
   if (!env.DB) {
     throw new Error('D1 Database binding (DB) not found');

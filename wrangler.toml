@@ -1,10 +1,10 @@
-name = "aayurglow"
-compatibility_date = "2024-04-03"
+name = "ayurglow"
+compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 pages_build_output_dir = ".vercel/output/static"
 
 [[d1_databases]]
 binding = "DB"
-database_name = "aayurglow-db"
-database_id = "your-database-id-placeholder"
+database_name = "aayurglow-db-20260417"
+database_id = "87c72000-92fc-426d-9dcd-1142f82b8b0e"
 migrations_dir = "drizzle/migrations"

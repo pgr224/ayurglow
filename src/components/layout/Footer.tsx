@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
-import { MapPin, Phone, Mail, Instagram, Facebook, Twitter } from 'lucide-react'
+import { Globe, Heart, Mail, MapPin, Phone, Send } from 'lucide-react'
 
 export function Footer() {
   return (
@@ -17,13 +17,13 @@ export function Footer() {
             </p>
             <div className="flex gap-4 mt-2">
               <Link href="#" className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors">
-                <Instagram className="h-5 w-5" />
+                <Globe className="h-5 w-5" />
               </Link>
               <Link href="#" className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors">
-                <Facebook className="h-5 w-5" />
+                <Heart className="h-5 w-5" />
               </Link>
               <Link href="#" className="h-10 w-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors">
-                <Twitter className="h-5 w-5" />
+                <Send className="h-5 w-5" />
               </Link>
             </div>
           </div>
