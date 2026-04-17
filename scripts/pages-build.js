@@ -21,6 +21,7 @@ run("node", ["scripts/patch-next-on-pages.js"], process.env);
 
 const env = {
   ...process.env,
+  PATH: `${process.env.PATH};C:\\Program Files\\Git\\bin`,
   npm_config_legacy_peer_deps: "true",
   NPM_CONFIG_LEGACY_PEER_DEPS: "true",
 };

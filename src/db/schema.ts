@@ -135,6 +135,23 @@ export const banners = sqliteTable("banners", {
   isActive: integer("is_active", { mode: "boolean" }).default(true),
 });
 
+// Site Settings table
+export const siteSettings = sqliteTable("site_settings", {
+  id: text("id").primaryKey(),
+  key: text("key").unique().notNull(),
+  value: text("value"),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).default(sql`(strftime('%s', 'now'))`),
+});
+
+// Pages table (for policies, content etc)
+export const pages = sqliteTable("pages", {
+  id: text("id").primaryKey(),
+  slug: text("slug").unique().notNull(),
+  title: text("title").notNull(),
+  content: text("content"), // HTML or Markdown
+  updatedAt: integer("updated_at", { mode: "timestamp" }).default(sql`(strftime('%s', 'now'))`),
+});
+
 // Relationships
 export const productsRelations = relations(products, ({ one, many }) => ({
   category: one(categories, {

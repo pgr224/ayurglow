@@ -1,0 +1,114 @@
+# AyurGlow Product Catalog & Category Filter System
+
+## Background
+
+Currently AyurGlow has only 4 products in a flat array with basic categories (`MOISTURIZE`, `CORRECT`, `CLEANSE`, `HAIR CARE`). The products page has no filter UI. We need to expand the product catalog with dummy products and implement a robust category/filter system inspired by **Foxtale** (collection tabs) and **Dr. Sheth's** (skin type filters), adapted to AyurGlow's Ayurvedic brand identity.
+
+## Research Summary
+
+### Foxtale.in Collection Tabs
+- **Product Type Tabs**: Serums, Cleansers, Moisturizers, Sunscreens, Masks, Toners, Bodycare
+- **Filter axes**: Skin Type, Skin Concern, Ingredients
+- **Presentation**: Horizontal scrollable tab pills at top of collection page
+
+### Dr. Sheth's Filters (hdt-filters)
+- **Skin Type**: Dry, Oily, Normal, Sensitive, Combination
+- **Concern**: Pigmentation, Acne, Dryness, Blackheads, Ageing, Uneven Skin Tone, Brightening, Dark Spots
+- **Ingredient**: Vitamin C, Hyaluronic Acid, Kojic Acid, Niacinamide
+- **Routine**: Cleanse, Treat, Moisturize, Protect
+
+### AyurGlow Adaptation (Ayurvedic Focus)
+Merged modern skincare classification with Ayurvedic dosha-based philosophy.
+
+## Proposed Changes
+
+---
+
+### Product Data Layer
+
+#### [MODIFY] [products.ts](file:///d:/PP942920DRIVE/PROJECTS/Ayurglow/src/lib/products.ts)
+
+Expand the `Product` interface to include filter metadata and grow the catalog to **16 dummy products** across diverse categories. Each product will include:
+- `skinType`: array of applicable skin types
+- `concern`: array of targeted concerns
+- `keyIngredients`: array of hero Ayurvedic ingredients
+
+**New Product Catalog (16 products):**
+
+| # | Product Name | Category | Concern | Key Ingredients |
+|---|---|---|---|---|
+| 1 | Aloevera Gel with Vitamin C | Moisturizer | Dryness, Dullness | Aloe Vera, Vitamin C |
+| 2 | Kumkumadi Oil | Serum/Oil | Pigmentation, Ageing | Kesar, Sandalwood |
+| 3 | Herbal Ubtan Powder | Cleanser | Dullness, Tan | Turmeric, Gram Flour |
+| 4 | Hair Mask Powder | Hair Care | Hair Fall, Dandruff | Hibiscus, Amla, Bhringraj |
+| 5 | Neem & Tulsi Face Wash | Cleanser | Acne, Oily Skin | Neem, Tulsi |
+| 6 | Rose & Saffron Toner | Toner | Pigmentation, Pores | Rose Water, Saffron |
+| 7 | Turmeric Brightening Cream | Moisturizer | Dark Spots, Ageing | Turmeric, Manjistha |
+| 8 | Tea Tree Anti-Acne Gel | Treatment | Acne, Blackheads | Tea Tree, Neem |
+| 9 | Sandalwood Sunscreen SPF 50 | Sunscreen | Sun Damage, Tanning | Sandalwood, Zinc Oxide |
+| 10 | Bhringraj Hair Oil | Hair Care | Hair Fall, Grey Hair | Bhringraj, Amla |
+| 11 | Ashwagandha Night Cream | Moisturizer | Ageing, Dryness | Ashwagandha, Shatavari |
+| 12 | Charcoal & Clay Mask | Mask | Blackheads, Oily Skin | Activated Charcoal, Multani Mitti |
+| 13 | Vitamin C Brightening Serum | Serum/Oil | Dullness, Pigmentation | Vitamin C, Amla Extract |
+| 14 | Triphala Eye Cream | Treatment | Dark Circles, Ageing | Triphala, Almond Oil |
+| 15 | Coconut & Hibiscus Body Lotion | Body Care | Dryness, Rough Skin | Coconut Oil, Hibiscus |
+| 16 | Lip Balm — Beetroot & Ghee | Lip Care | Dry Lips, Pigmentation | Beetroot, Desi Ghee |
+
+---
+
+### Category & Filter System
+
+#### [NEW] [categories.ts](file:///d:/PP942920DRIVE/PROJECTS/Ayurglow/src/lib/categories.ts)
+
+Central definition of all filter options:
+
+**Product Type (Routine-based — inspired by Foxtale tabs):**
+- All, Cleanser, Serum/Oil, Moisturizer, Sunscreen, Mask, Toner, Treatment, Hair Care, Body Care, Lip Care
+
+**Skin Type (Dosha-mapped — inspired by Dr. Sheth's):**
+- Vata (Dry), Pitta (Sensitive), Kapha (Oily), Normal, Combination
+
+**Concern (Ayurvedic + Modern):**
+- Acne, Pigmentation, Ageing, Dullness, Dryness, Dark Spots, Hair Fall, Blackheads, Tan, Dark Circles, Dandruff
+
+**Key Ingredients (Ayurvedic Hero Ingredients):**
+- Turmeric, Neem, Tulsi, Aloe Vera, Saffron, Sandalwood, Ashwagandha, Bhringraj, Amla, Tea Tree, Vitamin C, Rose Water
+
+---
+
+### Products Page with Filters
+
+#### [MODIFY] [page.tsx](file:///d:/PP942920DRIVE/PROJECTS/Ayurglow/src/app/products/page.tsx)
+
+Add a premium filter UI with:
+1. **Top Tab Bar** (horizontal scrolling pills) — Product Type filter (All / Cleanser / Serum / etc.)
+2. **Collapsible Sidebar or Dropdown Filters** — Skin Type, Concern, Ingredient multi-select
+3. **Active filter pills** with clear-all functionality
+4. **Product count** indicator
+5. **Responsive**: tabs scroll horizontally on mobile, sidebar collapses to bottom sheet
+
+#### [NEW] [ProductFilters.tsx](file:///d:/PP942920DRIVE/PROJECTS/Ayurglow/src/components/products/ProductFilters.tsx)
+
+Client component for the filter UI with:
+- Category tab pills (horizontal scroll)
+- Expandable filter groups (Skin Type, Concern, Ingredient)
+- URL-based state management via `searchParams`
+
+---
+
+### Product Image Generation
+
+Generate 12 new placeholder product images to visually populate the catalog.
+
+---
+
+## Verification Plan
+
+### Automated Tests
+- Build the project with `npm run build` to verify no TypeScript or compilation errors.
+- Navigate to `/products` and verify filters work correctly.
+
+### Manual Verification
+- Check that all 16 products render with correct data.
+- Verify filters narrow the product list appropriately.
+- Confirm responsive layout on mobile widths.

@@ -6,6 +6,7 @@ import { BottomNav } from "@/components/layout/BottomNav";
 import { CartProvider } from "@/context/cart-context";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { Footer } from "@/components/layout/Footer";
+import { Heartbeat } from "@/components/shared/Heartbeat";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -26,6 +27,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} font-sans scroll-smooth`}>
       <body className="min-h-screen bg-background antialiased flex flex-col">
         <CartProvider>
+          <Heartbeat />
           <AnnouncementBar />
           <Header />
           <main className="flex-1 pb-20 md:pb-0">

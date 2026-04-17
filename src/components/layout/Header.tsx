@@ -20,11 +20,12 @@ export function Header() {
           <Link href="/" className="flex items-center overflow-hidden mix-blend-multiply w-[140px] md:w-[180px]">
             {/* The actual AyurGlow logo from the visiting card */}
             <Image 
-              src="/images/ayurglow-logo.jpg" 
+              src="/images/ayurglow_font.png" 
               alt="AyurGlow - Ayurvedic Aesthetics" 
-              width={180} 
+              width={200} 
               height={50} 
               className="object-contain"
+              priority
             />
           </Link>
         </div>
@@ -41,9 +42,11 @@ export function Header() {
         </div>
 
         <div className="flex items-center gap-1 md:gap-3">
-          <Button variant="ghost" size="icon" className="hidden md:flex hover:bg-slate-100">
-            <User className="h-5 w-5" />
-          </Button>
+          <Link href="/admin">
+            <Button variant="ghost" size="icon" className="hidden md:flex hover:bg-slate-100">
+              <User className="h-5 w-5" />
+            </Button>
+          </Link>
           <Link href="/cart">
             <Button variant="ghost" size="icon" className="relative hover:bg-slate-100">
               <ShoppingBag className="h-5 w-5" />

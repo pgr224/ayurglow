@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Globe, Heart, Mail, MapPin, Phone, Send } from 'lucide-react'
 
 export function Footer() {
@@ -11,7 +12,15 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
           {/* Brand Col */}
           <div className="flex flex-col gap-4">
-            <h2 className="text-2xl font-bold tracking-tight text-primary">AAYURGLOW</h2>
+            <Link href="/" className="inline-block mix-blend-screen brightness-125">
+              <Image 
+                src="/images/ayurglow_font.png" 
+                alt="AyurGlow" 
+                width={180} 
+                height={40} 
+                className="object-contain"
+              />
+            </Link>
             <p className="text-sm text-[#94A3B8] font-medium leading-relaxed">
               Ayurvedic Aesthetics by Dr. Bina G. Rabadia (BAMS, PGDACC, ADHM, CCH). Dermatologist formulated, 100% herbal skincare solutions.
             </p>
@@ -62,10 +71,11 @@ export function Footer() {
           <div className="flex flex-col gap-4">
             <h3 className="text-sm font-bold tracking-widest uppercase text-white">Policies</h3>
             <ul className="flex flex-col gap-3 text-sm text-[#94A3B8]">
-              <li><Link href="#" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Terms of Service</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">Shipping & Returns</Link></li>
-              <li><Link href="#" className="hover:text-primary transition-colors">FAQ</Link></li>
+              <li><Link href="/privacy-policy" className="hover:text-primary transition-colors">Privacy Policy</Link></li>
+              <li><Link href="/terms-of-service" className="hover:text-primary transition-colors">Terms of Service</Link></li>
+              <li><Link href="/shipping-policy" className="hover:text-primary transition-colors">Shipping Policy</Link></li>
+              <li><Link href="/return-policy" className="hover:text-primary transition-colors">Return Policy</Link></li>
+              <li><Link href="/disclaimer" className="hover:text-primary transition-colors">Disclaimer</Link></li>
             </ul>
           </div>
         </div>

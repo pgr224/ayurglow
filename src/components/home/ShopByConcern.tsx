@@ -4,10 +4,10 @@ import React from 'react'
 import Link from 'next/link'
 
 const CONCERNS = [
-  { name: 'Ageing Skin', bg: 'bg-[#F3E8FF]', textColor: 'text-purple-700', icon: '✨' },
-  { name: 'Dry & Damaged Skin', bg: 'bg-[#DBEAFE]', textColor: 'text-blue-700', icon: '💧' },
-  { name: 'Acne', bg: 'bg-[#D1FAE5]', textColor: 'text-green-700', icon: '🌿' },
-  { name: 'Pigmentation', bg: 'bg-[#FEF3C7]', textColor: 'text-yellow-700', icon: '☀️' },
+  { id: 'ageing', name: 'Ageing Skin', bg: 'bg-[#F3E8FF]', textColor: 'text-purple-700', icon: '✨' },
+  { id: 'dryness', name: 'Dry & Damaged Skin', bg: 'bg-[#DBEAFE]', textColor: 'text-blue-700', icon: '💧' },
+  { id: 'acne', name: 'Acne', bg: 'bg-[#D1FAE5]', textColor: 'text-green-700', icon: '🌿' },
+  { id: 'pigmentation', name: 'Pigmentation', bg: 'bg-[#FEF3C7]', textColor: 'text-yellow-700', icon: '☀️' },
 ]
 
 export function ShopByConcern() {
@@ -23,7 +23,7 @@ export function ShopByConcern() {
           {CONCERNS.map((concern, i) => (
             <Link 
               key={i} 
-              href={`/products?concern=${concern.name.toLowerCase().replace(/ /g, '-')}`}
+              href={`/products?concern=${concern.id}`}
               className="flex items-center bg-white border rounded-2xl shadow-sm hover:shadow-md transition-all group overflow-hidden"
             >
               <div className={`h-16 w-20 ${concern.bg} flex items-center justify-center text-3xl shrink-0 group-hover:scale-110 transition-transform origin-left`}>
