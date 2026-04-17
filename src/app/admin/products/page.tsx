@@ -2,6 +2,8 @@ import React from 'react'
 import { Plus, Search, Filter, MoreHorizontal, Edit, Trash2, Eye } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
+export const runtime = 'edge'
+
 const PRODUCTS = [
   { id: '1', name: 'Ceramide & Vitamin C Sunscreen', category: 'PROTECT', price: 499, stock: 450, status: 'Active' },
   { id: '2', name: 'Haldi & Hyaluronic Acid Sunscreen', category: 'PROTECT', price: 499, stock: 12, status: 'Low Stock' },

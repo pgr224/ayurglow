@@ -38,24 +38,23 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-## Deploy on Cloudflare Pages (GitHub Actions)
+## Deploy on Cloudflare Pages (Direct From Terminal)
 
-A workflow is configured at `.github/workflows/deploy-pages.yml` to deploy on every push to `main`.
+Use local terminal deploy as the primary path:
 
-Set these repository secrets in GitHub before running the workflow:
+1. Login once: `npx wrangler login`
+2. Optional (if migrations changed): `npx wrangler d1 migrations apply aayurglow-db-20260417 --remote`
+3. Deploy: `npm run deploy`
 
-- `CLOUDFLARE_API_TOKEN`
-- `CLOUDFLARE_ACCOUNT_ID`
+`npm run deploy` now runs a direct local build + Pages deploy:
 
-The workflow will:
+- `next-on-pages`
+- `wrangler pages deploy .vercel/output/static --project-name ayurglow --branch main`
 
-1. Install dependencies with `npm ci`
-2. Apply remote D1 migrations with `npx wrangler d1 migrations apply aayurglow-db-20260417 --remote`
-3. Run `npm run deploy:ci` (build with `next-on-pages` and deploy to Cloudflare Pages)
+On Windows, a small patch script runs automatically to work around a known `next-on-pages` issue where it tries to spawn `npx` directly. The build wrapper also enables npm legacy peer dependency resolution during the Vercel build phase.
 
-### Local Deploy Behavior on Windows
+### GitHub usage
 
-- `npm run deploy` is intentionally blocked on Windows and prints CI instructions immediately.
-- Use GitHub Actions for deployment (push to `main` or run workflow manually).
-- If you are on Linux/WSL, use `npm run deploy:ci` for direct deploy.
+- GitHub is used only to store source code.
+- The workflow at `.github/workflows/deploy-pages.yml` is manual-only (`workflow_dispatch`) and does not run on every push.
 

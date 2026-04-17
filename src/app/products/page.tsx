@@ -1,8 +1,15 @@
 import { ProductCard } from '@/components/shared/ProductCard'
 import { getProductsByCategory } from '@/lib/products'
 
-export default function ProductsPage({ searchParams }: { searchParams: { category?: string } }) {
-  const category = searchParams.category || 'all'
+export const runtime = 'edge'
+
+export default async function ProductsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ category?: string }>
+}) {
+  const resolvedSearchParams = await searchParams
+  const category = resolvedSearchParams.category || 'all'
   const products = getProductsByCategory(category)
 
   return (
